@@ -1,3 +1,4 @@
+from serviceHandler import Service
 
 class Rules:
     assertion = {
@@ -62,3 +63,9 @@ class Rules:
         self.called['otherwise'] = True
         self.execOrNot = True
         return self
+
+    def run(self, service_name, method, params):
+        if not self.execOrNot:
+            return self
+
+        return self.executor([service_name, method, params])
