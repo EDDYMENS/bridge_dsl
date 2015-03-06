@@ -69,3 +69,23 @@ class Rules:
             return self
 
         return self.executor([service_name, method, params])
+
+
+    def executor(self, evaluator):
+        whenever = self.assertion['whenever']
+        else_whenever = self.assertion['else_whenever']
+        otherwise = self.assertion['otherwise']
+
+        if self.called['else_whenever'] and self.called['whenever']:
+            self.results = 'you cannot call on else_whenever without calling on whenever'
+
+        elif otherwise and self.called['whenever']:
+            self.results = 'You cannot call on otherwise without calling on whenever'
+
+
+        elif (whenever and self.called['whenever']) or \
+                (else_whenever and self.called['whenever'] and self.called['else_whenever']) or \
+                (otherwise and (self.called['whenever'] and self.called['else_whenever'])):
+            self.results = Service().execute(evaluator[0], evaluator[1], evaluator[2])
+
+        return self.results if self.called['otherwise'] else self
