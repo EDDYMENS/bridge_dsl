@@ -71,6 +71,10 @@ class Rules:
         return self.executor([service_name, method, params])
 
 
+    """
+    evaluate run statements and return results
+    @:param evaluator eg. [service_name, method, params]
+    """
     def executor(self, evaluator):
         whenever = self.assertion['whenever']
         else_whenever = self.assertion['else_whenever']
